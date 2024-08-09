@@ -5,9 +5,11 @@ import Instruction_excel as ie
 import Instruction_open as io
 import webbrowser
 import os
-import pandas as pd
 import Instruction_Connection_DB_SAP_B1_Hana as iHana
-from Python_Project.Weather_Interface import weather
+from Google_translator.Google_translator import open_translator
+from Weather_Interface.weather import open_weather_interface
+from Decrypting_Encrypting.Encryp_Decryp import open_Encryp_Decryp
+from Calculator_app.Calculator import open_calc
 ###############################---HERE ARE DEFINED YUGO BOT FUNCTIONS---###########################################
 
 def Speak(text):
@@ -29,7 +31,7 @@ def callback(recognizer, audio):
         r.adjust_for_ambient_noise(source, duration=1)
         audio = r.listen(source)
     try:
-        text =r.recognize_google(audio).lower()
+        text = "hola"##r.recognize_google(audio).lower()
         print(text)
 
         if "hola" in text or "hey yugobot":
@@ -50,7 +52,7 @@ def listen_command():
         Speak("Estoy a la espera de sus comentarios")
         audio = r.listen(source)
     try:
-        data = r.recognize_google(audio)
+        data = "calculadora"#r.recognize_google(audio)
         return data
     except sr.UnknownValueError:
         print("Yugo bot no pudo entender su solicitud")
@@ -108,6 +110,18 @@ def prompt():
             iHana.create_item_report(connect, item_name)
         else:
             Speak("Failed to connect to the database.")
+
+    elif "clima" in prompt:
+        open_weather_interface()
+
+    elif "traductor" in prompt:
+        open_translator()
+
+    elif "encriptar" in prompt:
+        open_Encryp_Decryp()
+
+    elif "calculadora" in prompt:
+        open_calc()
 
     elif "abre youtube por favor" in prompt:
         Speak("Okey procederé a abrir youtube")
